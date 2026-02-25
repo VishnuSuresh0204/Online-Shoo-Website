@@ -16,7 +16,7 @@
                 <select name="category" class="form-control mr-2" onchange="this.form.submit()">
                     <option value="">All Categories</option>
                     {% for c in categories %}
-                    <option value="{{ c.id }}" {% if request.GET.category|add:"0"==c.id %}selected{% endif %}>
+                    <option value="{{ c.id }}" {% if request.GET.category|add:"0" == c.id %}selected{% endif %}>
                         {{ c.category_name }}
                     </option>
                     {% endfor %}

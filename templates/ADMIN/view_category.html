@@ -22,6 +22,12 @@
 <section class="section_gap_bottom">
     <div class="container">
 
+        <div class="row">
+            <div class="col-md-12 text-right mb-3">
+                <a href="/admin_add_category/" class="genric-btn success radius">Add Category</a>
+            </div>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
@@ -35,7 +41,8 @@
                     <tr>
                         <td>{{ cat.category_name }}</td>
                         <td>
-                            <a href="/admin_edit_category/?cid={{ cat.id }}" class="genric-btn info-border small">Edit</a>
+                            <a href="/admin_edit_category/?cid={{ cat.id }}"
+                                class="genric-btn info-border small">Edit</a>
                         </td>
                     </tr>
                     {% empty %}

@@ -730,7 +730,7 @@ def admin_view_users(request):
         return render(request, "ADMIN/admin_view_users.html", {
             "users_data": users_data
         })
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_view_sellers(request):
@@ -738,7 +738,7 @@ def admin_view_sellers(request):
         return render(request, "ADMIN/admin_view_all_sellers.html", {
             "sellers": SellerProfile.objects.all()
         })
-    return redirect("login")
+    return redirect("/login")
 
 
 def approve_seller(request):
@@ -749,7 +749,7 @@ def approve_seller(request):
             seller.status = True
             seller.save()
         return redirect("/admin_view_sellers")
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_view_products(request):
@@ -764,7 +764,7 @@ def admin_view_products(request):
                     "seller": seller
                 })
         return render(request, "ADMIN/admin_view_products.html", {"product_list": product_list})
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_add_category(request):
@@ -774,7 +774,7 @@ def admin_add_category(request):
             if not Category.objects.filter(category_name=name).exists():
                 Category.objects.create(category_name=name)
         return render(request, "ADMIN/add_category.html")
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_view_category(request):
@@ -782,7 +782,7 @@ def admin_view_category(request):
         return render(request, "ADMIN/view_category.html", {
             "categories": Category.objects.all()
         })
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_edit_category(request):
@@ -793,7 +793,7 @@ def admin_edit_category(request):
             category.category_name = request.POST.get("category_name")
             category.save()
         return render(request, "ADMIN/edit_category.html", {"category": category})
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_view_feedback(request):
@@ -816,7 +816,7 @@ def admin_view_feedback(request):
         return render(request, "ADMIN/admin_view_feedback.html", {
             "feedback_list": feedback_list
         })
-    return redirect("login")
+    return redirect("/login")
 
 
 def admin_view_all_orders(request):
@@ -830,7 +830,7 @@ def admin_view_all_orders(request):
             orders = orders.order_by("-order_date")
 
         return render(request, "ADMIN/view_orders.html", {"orders": orders})
-    return redirect("login")
+    return redirect("/login")
 
 
 def reject_seller(request):
