@@ -1,0 +1,65 @@
+{% extends 'ADMIN/commen.html' %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner">
+            <h1>Product Feedback</h1>
+        </div>
+    </div>
+</section>
+
+<!-- Messages -->
+<div class="container mt-3">
+    {% for m in messages %}
+    <div class="alert alert-info text-center">
+        {{ m }}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Feedback List -->
+<section class="section_gap_bottom">
+    <div class="container">
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Seller</th>
+                        <th>User</th>
+                        <th>Rating/Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in feedback_list %}
+                    <tr>
+                        <td>
+                            <strong>{{ item.product.product_name }}</strong>
+                        </td>
+                        <td>
+                            Shop: {{ item.seller.shop_name }}<br>
+                            Owner: {{ item.seller.owner_name }}
+                        </td>
+                        <td>{{ item.user.name }}</td>
+                        <td>
+                            <strong>Rating:</strong> ⭐ {{ item.review.rating }} / 5<br>
+                            <strong>Comment:</strong> {{ item.review.comment }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No feedback available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

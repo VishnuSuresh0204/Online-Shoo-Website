@@ -1,0 +1,53 @@
+{% extends 'ADMIN/commen.html' %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <h1>All Categories</h1>
+    </div>
+</section>
+
+<!-- Messages -->
+<div class="container mt-3">
+    {% for m in messages %}
+    <div class="alert alert-info text-center">
+        {{ m }}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Category List -->
+<section class="section_gap_bottom">
+    <div class="container">
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th style="width: 20%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in categories %}
+                    <tr>
+                        <td>{{ cat.category_name }}</td>
+                        <td>
+                            <a href="/admin_edit_category/?cid={{ cat.id }}" class="genric-btn info-border small">Edit</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center">No categories available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

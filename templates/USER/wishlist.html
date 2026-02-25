@@ -1,0 +1,65 @@
+{% extends 'USER/commen.html' %}
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>My Wishlist</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/user_home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Wishlist</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-5 mb-5">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in wishlist_items %}
+                <tr>
+                    <td style="width: 15%;">
+                        <img class="img-fluid" src="{{ item.product.image.url }}" alt=""
+                            style="height: 100px; width: 100px; object-fit: cover;">
+                    </td>
+                    <td>
+                        <h6>{{ item.product.product_name }}</h6>
+                        <small class="text-muted">{{ item.product.brand }}</small>
+                    </td>
+                    <td>
+                        <h6>₹{{ item.product.price }}</h6>
+                    </td>
+                    <td>
+                        <a href="/add_to_cart/{{ item.product.id }}/" class="genric-btn primary small mr-2">
+                            <span class="ti-bag"></span> Add to Bag
+                        </a>
+                        <a href="/remove_from_wishlist/?wid={{ item.id }}" class="genric-btn danger small">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">
+                        <h3>Your wishlist is empty.</h3>
+                        <a class="primary-btn mt-3" href="/view_product">Browse Products</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

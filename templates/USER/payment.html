@@ -1,0 +1,81 @@
+{% extends 'USER/commen.html' %}
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Payment</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/user_home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Payment</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="checkout_area section_gap">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <form class="row contact_form" action="" method="post" novalidate="novalidate">
+                        {% csrf_token %}
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="first" name="name" placeholder="Full Name"
+                                value="{{ user_profile.name }}" required>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="number" name="phone" placeholder="Phone Number"
+                                value="{{ user_profile.phone }}" required>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email Address"
+                                value="{{ user_profile.email }}">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <textarea class="form-control" name="address" id="message" rows="1"
+                                placeholder="Shipping Address" required>{{ user_profile.address }}</textarea>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <h3>Shipping Details</h3>
+                            </div>
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option5" name="payment_method" value="COD" checked>
+                                    <label for="f-option5">Cash on Delivery</label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                            <div class="payment_item active">
+                                <div class="radion_btn">
+                                    <input type="radio" id="f-option6" name="payment_method" value="MockCard">
+                                    <label for="f-option6">Credit Card (Mock)</label>
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="primary-btn w-100">Pay ₹{{ total_price }}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li><a href="#">Total <span>₹{{ total_price }}</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

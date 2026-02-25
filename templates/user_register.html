@@ -1,0 +1,108 @@
+{% extends 'commen.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>User Registration</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/">
+                        Home <span class="lnr lnr-arrow-right"></span>
+                    </a>
+                    <span>Register</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Django Messages -->
+<div class="container mt-3">
+    {% for m in messages %}
+    <div class="alert alert-info text-center">
+        {{ m }}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Registration Form -->
+<section class="contact_area section_gap_bottom">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow p-4">
+
+                    <h3 class="text-center mb-4">Create Your Account</h3>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <input type="text"
+                                   class="form-control"
+                                   name="name"
+                                   placeholder="Full Name"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email"
+                                   class="form-control"
+                                   name="email"
+                                   placeholder="Email Address"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel"
+                                   class="form-control"
+                                   name="phone"
+                                   placeholder="Phone Number"
+                                   pattern="[0-9]{10}"
+                                   required>
+                            <small class="text-muted">
+                                Enter 10-digit phone number
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-control"
+                                      name="address"
+                                      rows="3"
+                                      placeholder="Address"
+                                      required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password"
+                                   class="form-control"
+                                   name="password"
+                                   placeholder="Password"
+                                   minlength="6"
+                                   required>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="primary-btn w-100">
+                                Register
+                            </button>
+                        </div>
+
+                        <p class="text-center mt-3">
+                            Already have an account?
+                            <a href="/login">Login here</a>
+                        </p>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

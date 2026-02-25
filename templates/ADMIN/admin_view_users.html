@@ -1,0 +1,83 @@
+{% extends 'ADMIN/commen.html' %}
+
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <h1>All Users</h1>
+    </div>
+</section>
+
+<div class="container mt-4">
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Status / Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in users_data %}
+                <tr>
+                    <td>{{ item.login.username }}</td>
+                    <td>
+                        {% if item.profile %}
+                        {{ item.profile.name }}
+                        {% else %}
+                        <span class="badge badge-warning">No Profile</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.profile %}
+                        {{ item.profile.email }}
+                        {% else %}
+                        {{ item.login.username }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.profile %}
+                        {{ item.profile.phone }}
+                        {% else %}
+                        <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.profile %}
+                        {{ item.profile.address }}
+                        {% else %}
+                        <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.profile %}
+                        {% if item.profile.status %}
+                        <span class="badge badge-success">Active</span>
+                        <a href="/block_user/?uid={{ item.login.id }}" class="genric-btn danger small ml-2">Block</a>
+                        {% else %}
+                        <span class="badge badge-danger">Blocked</span>
+                        <a href="/unblock_user/?uid={{ item.login.id }}"
+                            class="genric-btn success small ml-2">Unblock</a>
+                        {% endif %}
+                        {% else %}
+                        <span class="text-muted">No Profile</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No users found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

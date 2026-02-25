@@ -1,0 +1,63 @@
+{% extends 'USER/commen.html' %}
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Edit Review</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/user_home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="/product_details/?pid={{ product.id }}">{{ product.product_name }}<span
+                            class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Edit Review</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="login_form_inner">
+                <h3>Edit Your Review</h3>
+                <p class="text-muted mb-4">{{ product.product_name }}</p>
+                <form class="row login_form" action="" method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="col-md-12 form-group">
+                        <label class="font-weight-bold">Rating</label>
+                        <select name="rating" id="rating_select" class="form-control">
+                            <option value="5">5 - Excellent</option>
+                            <option value="4">4 - Good</option>
+                            <option value="3">3 - Average</option>
+                            <option value="2">2 - Poor</option>
+                            <option value="1">1 - Terrible</option>
+                        </select>
+                    </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const val = "{{ review.rating }}";
+                            if (val) {
+                                document.getElementById("rating_select").value = val;
+                            }
+                        });
+                    </script>
+                    <div class="col-md-12 form-group">
+                        <label class="font-weight-bold">Your Review</label>
+                        <textarea class="form-control" name="comment" rows="4" placeholder="Describe your experience"
+                            required>{{ review.comment }}</textarea>
+                    </div>
+                    <div class="col-md-12 form-group d-flex" style="gap: 10px;">
+                        <button type="submit" class="primary-btn">Update Review</button>
+                        <a href="/product_details/?pid={{ product.id }}" class="btn btn-outline-secondary"
+                            style="padding: 10px 24px; border-radius: 6px;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

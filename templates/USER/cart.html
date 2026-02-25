@@ -1,0 +1,103 @@
+{% extends 'USER/commen.html' %}
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/user_home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            {% if cart_items %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img src="{{ item.product.image.url }}" alt=""
+                                            style="width: 100px; height: 100px; object-fit: cover;">
+                                    </div>
+                                    <div class="media-body">
+                                        <p>{{ item.product.product_name }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>₹{{ item.product.price }}</h5>
+                            </td>
+                            <td>
+                                <div class="product_count d-flex align-items-center">
+                                    <a href="/update_cart_quantity/?cid={{ item.id }}&action=decrease" class="btn btn-sm btn-light border mr-2" style="width: 30px; height: 30px; line-height: 18px;">-</a>
+                                    <input type="text" name="qty" maxlength="12" value="{{ item.quantity }}"
+                                        title="Quantity:" class="input-text qty form-control text-center" style="width: 50px;" readonly>
+                                    <a href="/update_cart_quantity/?cid={{ item.id }}&action=increase" class="btn btn-sm btn-light border ml-2" style="width: 30px; height: 30px; line-height: 18px;">+</a>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>₹{% widthratio item.product.price 1 item.quantity %}</h5>
+                            </td>
+                            <td>
+                                <a href="/remove_from_cart/?cid={{ item.id }}"
+                                    class="genric-btn danger circle small">Remove</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                                <h5>₹{{ total_price }}</h5>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <a class="gray_btn" href="/view_product">Continue Shopping</a>
+                                    <a class="primary-btn" href="/payment">Proceed to Checkout</a>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center my-5">
+                <h3>Your cart is empty!</h3>
+                <a class="primary-btn mt-3" href="/view_product">Shop Now</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

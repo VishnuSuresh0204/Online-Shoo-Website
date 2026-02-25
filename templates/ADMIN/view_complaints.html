@@ -1,0 +1,72 @@
+{% extends 'ADMIN/commen.html' %}
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <h1>User Complaints</h1>
+    </div>
+</section>
+
+<div class="container mt-5 mb-5">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Reported Seller</th>
+                    <th>Subject</th>
+                    <th>Complaint</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in complaints %}
+                <tr>
+                    <td>{{ c.date }}</td>
+                    <td>{{ c.user.username }}</td>
+                    <td>{{ c.seller.username }}</td>
+                    <td>{{ c.subject }}</td>
+                    <td>{{ c.complaint }}</td>
+                    <td>
+                        <!-- We might need to find the SellerProfile ID to block. 
+                             The models only link Complaint.seller to Login. 
+                             We need to find the profile relative to that login.
+                             Since we can't easily jump in template without 'related_name' or View logic,
+                             let's rely on a smart view or custom template tag?
+                             
+                             WAIT: Complaint.seller is a Login object.
+                             We need SellerProfile ID for 'block_seller' view (which expects a SellerProfile ID 'sid').
+                             
+                             FIX: In views.py 'admin_view_complaints', we iterate complaints.
+                             The Complaint model has no direct link to SellerProfile ID.
+                             Django Reverse Relation: seller_login.sellerprofile_set.first().id ??
+                             
+                             Let's check 'models.py'. SellerProfile has 'logid' (foreign key to Login).
+                             So `complaint.seller.sellerprofile_set.first.id` should work if related name default.
+                        -->
+                        {% with profile=c.seller.sellerprofile_set.first %}
+                        {% if profile %}
+                        {% if profile.status %}
+                        <a href="/block_seller/?sid={{ profile.id }}" class="genric-btn danger small">Block Seller</a>
+                        {% else %}
+                        <span class="badge badge-danger">Blocked</span>
+                        <a href="/unblock_seller/?sid={{ profile.id }}" class="genric-btn info small">Unblock</a>
+                        {% endif %}
+                        {% else %}
+                        <span class="text-muted">Profile Not Found</span>
+                        {% endif %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No complaints found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

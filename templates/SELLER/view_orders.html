@@ -1,0 +1,71 @@
+{% extends 'SELLER/commen.html' %}
+
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <h1>My Orders</h1>
+    </div>
+</section>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-end mb-3">
+        <form method="get" class="form-inline">
+            <select name="sort" class="form-control mr-2" onchange="this.form.submit()">
+                <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest First</option>
+                <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Order Details</th>
+                    <th>Customer Info</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>
+                        <strong>Product:</strong> {{ order.product.product_name }}<br>
+                        <strong>Qty:</strong> {{ order.quantity }}<br>
+                        <strong>Date:</strong> {{ order.order_date }}
+                    </td>
+                    <td>
+                        <strong>Contact:</strong> {{ order.contact_number }}<br>
+                        <strong>Address:</strong> {{ order.delivery_address }}
+                    </td>
+                    <td>
+                        <span class="badge badge-info">{{ order.status }}</span>
+                    </td>
+                    <td>
+                        <form method="post" action="/update_order_status/?oid={{ order.id }}" class="form-inline">
+                            {% csrf_token %}
+                            <select name="status" class="form-control form-control-sm mr-2 mb-2" required>
+                                <option value="">Update Status</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                            <button type="submit" class="genric-btn primary small mb-2">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No orders found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

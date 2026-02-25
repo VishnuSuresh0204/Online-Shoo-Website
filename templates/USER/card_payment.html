@@ -1,0 +1,173 @@
+{% extends 'USER/commen.html' %}
+{% block content %}
+
+<style>
+    .payment-container {
+        display: flex;
+        justify-content: center;
+        padding: 50px 0;
+        background-color: #f9f9f9;
+    }
+
+    .atm-card {
+        width: 400px;
+        height: 250px;
+        background: linear-gradient(25deg, #0f0c29, #302b63, #24243e);
+        border-radius: 15px;
+        color: #fff;
+        padding: 25px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        position: relative;
+        font-family: 'Courier New', Courier, monospace; /* Monospace for that printed feel */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .chip {
+        width: 50px;
+        height: 35px;
+        background: linear-gradient(135deg, #fce38a 0%, #f38181 100%);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    
+    .chip::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border: 1px solid rgba(0,0,0,0.1);
+        background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.1) 5px, rgba(0,0,0,0.1) 6px);
+    }
+
+    .bank-name {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        font-family: sans-serif;
+        font-weight: bold;
+        font-style: italic;
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    .card-input {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 1.2rem;
+        outline: none;
+        width: 100%;
+        text-shadow: 0 2px 1px rgba(0,0,0,0.3);
+    }
+
+    .card-input::placeholder {
+        color: rgba(255,255,255,0.4);
+    }
+
+    .card-number-group {
+        margin-top: 10px;
+    }
+    
+    .card-number-group input {
+        font-size: 1.6rem;
+        letter-spacing: 3px;
+        margin-bottom: 5px;
+    }
+
+    .card-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .info-group label {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.7);
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .info-group input {
+        font-size: 1rem;
+        letter-spacing: 1px;
+        width: 100%;
+        text-transform: uppercase;
+    }
+
+    .pay-btn-container {
+        width: 400px;
+        margin: 30px auto 0;
+    }
+    
+    .mastercard-logo {
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+        opacity: 0.8;
+    }
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .red { background-color: rgba(235, 0, 27, 0.8); margin-right: -15px;}
+    .yellow { background-color: rgba(247, 158, 27, 0.8); }
+
+</style>
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Payment</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/user_home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Secure Checkout</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="payment-container">
+    <form action="/process_card_payment/" method="post">
+        {% csrf_token %}
+        <div class="atm-card">
+            <div class="bank-name">World Bank</div>
+            <div class="chip"></div>
+            
+            <div class="card-number-group">
+                <input type="text" name="card_number" class="card-input" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            </div>
+
+            <div class="card-bottom">
+                <div class="info-group" style="flex: 2; margin-right: 15px;">
+                    <label>Card Holder</label>
+                    <input type="text" name="card_name" class="card-input" placeholder="FULL NAME" required>
+                </div>
+                <div class="info-group" style="flex: 1; margin-right: 15px;">
+                    <label>Expires</label>
+                    <input type="text" name="expiry" class="card-input" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="info-group" style="flex: 0.8;">
+                    <label>CVV</label>
+                    <input type="password" name="cvv" class="card-input" placeholder="123" maxlength="3" required>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="pay-btn-container">
+            <button type="submit" class="primary-btn w-100 p-3" style="font-size: 1.1rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(255, 186, 0, 0.3);">
+                Pay Now <span style="font-weight: bold;">₹{{ total_price }}</span>
+            </button>
+            <p class="text-center mt-3 text-muted"><small>Secure Encrypted Transaction</small></p>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

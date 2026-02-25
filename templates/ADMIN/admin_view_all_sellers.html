@@ -1,0 +1,53 @@
+{% extends 'ADMIN/commen.html' %}
+
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <h1>All Sellers</h1>
+    </div>
+</section>
+
+<div class="container mt-4">
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Shop Info</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Status / Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for seller in sellers %}
+                <tr>
+                    <td>
+                        <strong>{{ seller.shop_name }}</strong><br>
+                        <small>Owner: {{ seller.owner_name }}</small>
+                    </td>
+                    <td>{{ seller.phone }}</td>
+                    <td>{{ seller.address }}</td>
+                    <td>
+                        {% if not seller.status %}
+                        <a href="/approve_seller/?sid={{ seller.id }}" class="genric-btn success small mb-1">Approve</a>
+                        <a href="/reject_seller/?sid={{ seller.id }}" class="genric-btn danger small mb-1">Reject</a>
+                        {% else %}
+                        <span class="badge badge-success">Approved</span>
+                        <a href="/block_seller/?sid={{ seller.id }}" class="genric-btn danger small mb-1 ml-2">Block</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No sellers found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

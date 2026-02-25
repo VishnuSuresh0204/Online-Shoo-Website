@@ -1,0 +1,68 @@
+{% extends 'SELLER/commen.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <h1>Add Product</h1>
+    </div>
+</section>
+
+<div class="container mt-3">
+    {% for m in messages %}
+    <div class="alert alert-info text-center">{{ m }}</div>
+    {% endfor %}
+</div>
+
+<section class="contact_area section_gap_bottom">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+
+                <div class="card shadow p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <input type="text" name="product_name" class="form-control mb-3"
+                               placeholder="Product Name" required>
+
+                        <select name="category" class="form-control mb-3" required>
+                            <option value="">Select Category</option>
+                            {% for c in categories %}
+                            <option value="{{ c.id }}">{{ c.category_name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="text" name="brand" class="form-control mb-3"
+                               placeholder="Brand" required>
+
+                        <input type="number" name="size" class="form-control mb-3"
+                               placeholder="Size" required>
+
+                        <input type="text" name="color" class="form-control mb-3"
+                               placeholder="Color" required>
+
+                        <input type="number" name="price" class="form-control mb-3"
+                               placeholder="Price" required>
+
+                        <input type="number" name="quantity" class="form-control mb-3"
+                               placeholder="Quantity" required>
+
+                        <textarea name="description" class="form-control mb-3"
+                                  placeholder="Description" required></textarea>
+
+                        <input type="file" name="image" class="form-control mb-3" required>
+
+                        <button type="submit" class="primary-btn w-100">
+                            Add Product
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

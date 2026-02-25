@@ -1,0 +1,57 @@
+{% extends 'SELLER/commen.html' %}
+{% block content %}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Product Feedback</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/seller_home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Reviews</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">User</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for review in reviews %}
+                        <tr>
+                            <td>{{ review.product.product_name }}</td>
+                            <td>
+                                <span class="badge badge-warning text-white">
+                                    {{ review.rating }}/5
+                                </span>
+                            </td>
+                            <td>{{ review.comment }}</td>
+                            <td>{{ review.logid.username }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <h3>No reviews yet.</h3>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
